@@ -67,7 +67,7 @@ export class AppointmentBookingEngine {
 
     // 1. GLOBAL INTERRUPT MATCHING (High Priority)
     const globals = [
-      { patterns: ["menu", "restart", "start", "home", "shuru"], target: "welcome" },
+      { patterns: ["menu", "restart", "start", "home"], target: "welcome" },
       { patterns: ["agent", "human", "receptionist", "support", "help"], target: "receptionist_handoff" },
       { patterns: ["status", "check booking", "my appointment"], target: "lookup_booking" },
     ];
