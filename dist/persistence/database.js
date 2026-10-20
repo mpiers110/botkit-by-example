@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { CONFIG } from "./config.js";
+import { CONFIG } from "../config.js";
 // Turn off buffering to immediately fail and reveal the REAL driver error if the URI or credentials are bad
 mongoose.set('bufferCommands', false);
 mongoose.set('strictQuery', false);

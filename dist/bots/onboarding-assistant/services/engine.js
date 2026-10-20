@@ -1,5 +1,5 @@
 import { ONBOARDING_FLOW } from "../flow.js";
-import { Persistence } from "./persistence.js";
+import { Persistence } from "../../../persistence/onboarding.js";
 export class OnboardingAssistantEngine {
     /**
      * Matches inbound message against a list of pattern strings (case-insensitive, trimmed).

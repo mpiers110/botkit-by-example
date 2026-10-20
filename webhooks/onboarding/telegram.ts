@@ -3,7 +3,7 @@
  * It includes endpoints for health checks, webhook reception, and webhook setup.\
  */
 import express, {Request, Response} from "express";
-import { Telegram } from "../../telegram.js";
+import { Telegram } from "../../channels/telegram.js";
 import { OnboardingAssistantEngine } from "../../bots/onboarding-assistant/services/engine.js";
 
 

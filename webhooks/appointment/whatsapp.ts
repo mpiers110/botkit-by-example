@@ -2,7 +2,7 @@
  * This module connects WhatsApp webhook requests to the AppointmentBookingEngine FSM.
  */
 import express, {Request, Response} from "express";
-import { sanitizeWhatsAppNumber, WhatsApp } from "../../flaresend.js";
+import { sanitizeWhatsAppNumber, WhatsApp } from "../../channels/whatsapp.js";
 import { AppointmentBookingEngine } from "../../bots/appointment-booking/services/engine.js";
 
 

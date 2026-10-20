@@ -1,10 +1,9 @@
 /**
- * This module connects WhatsApp webhook requests to the OnboardingAssistantEngine FSM.
- * It includes endpoints for health checks, webhook reception, and webhook setup.\
+ * This module connects WhatsApp webhook requests to the AppointmentBookingEngine FSM.
  */
 import express from "express";
-import { sanitizeWhatsAppNumber, WhatsApp } from "../../flaresend.js";
-import { OnboardingAssistantEngine } from "../services/engine.js";
+import { sanitizeWhatsAppNumber, WhatsApp } from "../../channels/whatsapp.js";
+import { AppointmentBookingEngine } from "../../bots/appointment-booking/services/engine.js";
 const router = express.Router();
 // GET /: Verification endpoint for WhatsApp / Flaresend webhooks
 router.get("/", (req, res) => {
@@ -30,14 +29,12 @@ router.post("/", async (req, res) => {
                 console.warn('WhatsApp message is missing sender or body');
                 return;
             }
-            // Execute FSM step
-            const result = await OnboardingAssistantEngine.processMessage(senderNumber, userMessage);
-            // Send reply to WhatsApp via Flaresend
-            if (result) {
-                console.log(`[Outbound WhatsApp] To: ${senderNumber} | Text: "${result.outboundText}" | Next State: ${result.nextState}`);
-                const sendResult = await WhatsApp.sendMessage(senderNumber, result.outboundText);
-                if (!sendResult.success)
-                    throw new Error(sendResult.error || 'Failed to send WhatsApp reply');
+            // Execute conversational FSM turn
+            const outcome = await AppointmentBookingEngine.runTurn(senderNumber, userMessage);
+            console.log(`[State Transition] NextNode: "${outcome.nextState.currentNodeId}" | Status: "${outcome.nextState.status}" | Retries: ${outcome.nextState.retryCount}`);
+            // Dispatch outbound WhatsApp response
+            if (outcome.outboundText) {
+                await WhatsApp.sendMessage(senderNumber, outcome.outboundText);
             }
         }
     }

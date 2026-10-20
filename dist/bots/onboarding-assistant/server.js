@@ -1,8 +1,8 @@
 import express from 'express';
 import { createServer } from 'node:http';
-import { connectDB } from '../database.js';
-import telegramRouter from './webhooks/telegram.js';
-import whatsAppRouter from './webhooks/whatsapp.js';
+import { connectDB } from '../../persistence/database.js';
+import telegramRouter from '../../webhooks/onboarding/telegram.js';
+import whatsAppRouter from '../../webhooks/onboarding/whatsapp.js';
 const app = express();
 const PORT = 3000;
 app.use(express.json({ limit: '10mb' }));

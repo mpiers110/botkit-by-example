@@ -3,7 +3,7 @@
  * It includes endpoints for health checks, webhook reception, and webhook setup.\
  */
 import express, {Request, Response} from "express";
-import { sanitizeWhatsAppNumber, WhatsApp } from "../../flaresend.js";
+import { sanitizeWhatsAppNumber, WhatsApp } from "../../channels/whatsapp.js";
 import { OnboardingAssistantEngine } from "../../bots/onboarding-assistant/services/engine.js";
 
 

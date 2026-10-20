@@ -3,8 +3,8 @@
  * It includes endpoints for health checks, webhook reception, and webhook setup.\
  */
 import express from "express";
-import { Telegram } from "../../telegram.js";
-import { AppointmentBookingEngine } from "../services/engine.js";
+import { Telegram } from "../../channels/telegram.js";
+import { AppointmentBookingEngine } from "../../bots/appointment-booking/services/engine.js";
 const router = express.Router();
 // POST /webhook - Telegram webhook receiver
 router.post("/", async (req, res) => {

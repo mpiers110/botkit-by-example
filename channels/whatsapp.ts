@@ -1,5 +1,5 @@
 import { Flaresend } from "flaresend";
-import { CONFIG } from "./config.js";
+import { CONFIG } from "../config.js";
 
 export interface FlaresendSendResponse {
   success: boolean;

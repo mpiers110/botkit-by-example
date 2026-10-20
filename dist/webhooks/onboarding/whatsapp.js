@@ -1,9 +1,10 @@
 /**
- * This module connects WhatsApp webhook requests to the AppointmentBookingEngine FSM.
+ * This module connects WhatsApp webhook requests to the OnboardingAssistantEngine FSM.
+ * It includes endpoints for health checks, webhook reception, and webhook setup.\
  */
 import express from "express";
-import { sanitizeWhatsAppNumber, WhatsApp } from "../../flaresend.js";
-import { AppointmentBookingEngine } from "../services/engine.js";
+import { sanitizeWhatsAppNumber, WhatsApp } from "../../channels/whatsapp.js";
+import { OnboardingAssistantEngine } from "../../bots/onboarding-assistant/services/engine.js";
 const router = express.Router();
 // GET /: Verification endpoint for WhatsApp / Flaresend webhooks
 router.get("/", (req, res) => {
@@ -20,6 +21,7 @@ router.post("/", async (req, res) => {
     try {
         // Acknowledge receipt to WhatsApp quickly (200 OK)
         res.status(200).json({ status: "received" });
+        // save the incoming webhook payload to db
         const { event, data } = WhatsApp.parseWebhook(req.body);
         if (event === 'message_received') {
             const userMessage = data?.message?.conversation;
@@ -29,12 +31,14 @@ router.post("/", async (req, res) => {
                 console.warn('WhatsApp message is missing sender or body');
                 return;
             }
-            // Execute conversational FSM turn
-            const outcome = await AppointmentBookingEngine.runTurn(senderNumber, userMessage);
-            console.log(`[State Transition] NextNode: "${outcome.nextState.currentNodeId}" | Status: "${outcome.nextState.status}" | Retries: ${outcome.nextState.retryCount}`);
-            // Dispatch outbound WhatsApp response
-            if (outcome.outboundText) {
-                await WhatsApp.sendMessage(senderNumber, outcome.outboundText);
+            // Execute FSM step
+            const result = await OnboardingAssistantEngine.processMessage(senderNumber, userMessage);
+            // Send reply to WhatsApp via Flaresend
+            if (result) {
+                console.log(`[Outbound WhatsApp] To: ${senderNumber} | Text: "${result.outboundText}" | Next State: ${result.nextState}`);
+                const sendResult = await WhatsApp.sendMessage(senderNumber, result.outboundText);
+                if (!sendResult.success)
+                    throw new Error(sendResult.error || 'Failed to send WhatsApp reply');
             }
         }
     }
