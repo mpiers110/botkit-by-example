@@ -2,18 +2,18 @@ import {BotkitGlobal, BotkitNode} from '../types.js';
 
 
 // ============================================================================
-// SHURUBOT CONVERSATIONAL FSM SPECIFICATION
+// ONBOARDING_ASSISTANT FLOW SPECIFICATION
 // ============================================================================
 
-export const shuruBotDefinition = {
-  flowId: "shuruBot",
+export const ONBOARDING_FLOW = {
+  flowId: "onboardingBot",
   version: 1,
   initialNodeId: "welcome",
 
   globals: [
     {
       id: "global_menu",
-      patterns: ["menu", "start", "restart", "home", "hi", "hello", "shuru"],
+      patterns: ["menu", "start", "restart", "home", "hi", "hello", "hey"],
       targetNodeId: "welcome",
       description: "Return to the main menu at any time",
     },
@@ -29,7 +29,7 @@ export const shuruBotDefinition = {
     welcome: {
       id: "welcome",
       text:
-        "👋 *Welcome to ShuruBot!* \nYour automated WhatsApp assistant for getting started.\n\n" +
+        "👋 *Hi, I am Anton!* \nI will help you get started with our services.\n\n" +
         "Please select an option:\n" +
         "1️⃣ *Services* — See what we offer\n" +
         "2️⃣ *Start Project* — Request a quotation\n" +
@@ -48,9 +48,9 @@ export const shuruBotDefinition = {
       id: "services",
       text:
         "🚀 *Our Core Services:*\n\n" +
-        "• *Automated WhatsApp Bots* — Customer support & conversational commerce\n" +
-        "• *API Integrations* — Flaresend, Stripe, CRM, and Webhook workflows\n" +
-        "• *Custom Cloud Software* — Node.js, Express, and high-scale backends\n\n" +
+        "• *Automated Chat Bots* — Customer support & conversational commerce\n" +
+        "• *API Integrations* — Conversational, Payments, Maps and Webhook integrations\n" +
+        "• *Custom Software* — Node.js, Express, and high-scale backends\n\n" +
         "Ready to begin?\n" +
         "• Reply *'start'* to begin a project request\n" +
         "• Reply *'menu'* to return to the main menu",
@@ -79,16 +79,16 @@ export const shuruBotDefinition = {
       id: "ask_service",
       text:
         "Thanks! Which service are you interested in?\n\n" +
-        "1️⃣ WhatsApp Chatbot\n" +
-        "2️⃣ API & Webhook Integration\n" +
-        "3️⃣ Full-stack Cloud Development\n\n" +
+        "1️⃣ Chatbot\n" +
+        "2️⃣ API Integration\n" +
+        "3️⃣ Custom Software\n\n" +
         "_(Reply with 1, 2, or 3)_",
       transitions: [
         { patterns: ["1", "bot", "chatbot", "whatsapp"], targetNodeId: "ask_timeline" },
         { patterns: ["2", "api", "webhook", "integration"], targetNodeId: "ask_timeline" },
-        { patterns: ["3", "cloud", "fullstack", "development"], targetNodeId: "ask_timeline" },
+        { patterns: ["3", "custom", "software", "development"], targetNodeId: "ask_timeline" },
       ],
-      fallbackText: "Please reply with *1* for WhatsApp Bot, *2* for API Integration, or *3* for Cloud Development.",
+      fallbackText: "Please reply with *1* for Chatbot, *2* for API Integration, or *3* for Custom Software.",
       maxRetries: 2,
     },
 

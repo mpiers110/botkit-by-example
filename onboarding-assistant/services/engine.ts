@@ -1,8 +1,8 @@
 import { TransitionOutcome } from "../types.js";
-import { shuruBotDefinition } from "../flow.js";
+import { ONBOARDING_FLOW } from "../flow.js";
 import { Persistence } from "./persistence.js";
 
-export class ShuruBotEngine {
+export class OnboardingAssistantEngine {
   /**
    * Matches inbound message against a list of pattern strings (case-insensitive, trimmed).
    * Supports wildcard "*" which matches any non-empty string.
@@ -31,9 +31,9 @@ export class ShuruBotEngine {
     if (!state) {
       state = {
         waUserId,
-        flowId: shuruBotDefinition.flowId,
-        flowVersion: shuruBotDefinition.version,
-        currentNodeId: shuruBotDefinition.initialNodeId,
+        flowId: ONBOARDING_FLOW.flowId,
+        flowVersion: ONBOARDING_FLOW.version,
+        currentNodeId: ONBOARDING_FLOW.initialNodeId,
         context: {},
         retryCount: 0,
         status: "active",
@@ -42,7 +42,7 @@ export class ShuruBotEngine {
       await Persistence.save(state);
 
       // Return the welcome message
-      const initialNode = shuruBotDefinition.nodes[shuruBotDefinition.initialNodeId];
+      const initialNode = ONBOARDING_FLOW.nodes[ONBOARDING_FLOW.initialNodeId];
       return {
         outboundText: initialNode.text,
         nextState: state,
@@ -50,9 +50,9 @@ export class ShuruBotEngine {
     }
 
     // 1. Check Global Interrupts (highest priority: "menu", "agent", etc.)
-    for (const global of shuruBotDefinition.globals) {
+    for (const global of ONBOARDING_FLOW.globals) {
       if (this.matchPatterns(rawInput, global.patterns)) {
-        const targetNode = shuruBotDefinition.nodes[global.targetNodeId];
+        const targetNode = ONBOARDING_FLOW.nodes[global.targetNodeId];
         if (targetNode) {
           state.currentNodeId = targetNode.id;
           state.retryCount = 0;
@@ -68,8 +68,8 @@ export class ShuruBotEngine {
 
     // 2. Fetch Current Active Node
     const currentNode =
-      shuruBotDefinition.nodes[state.currentNodeId] ||
-      shuruBotDefinition.nodes[shuruBotDefinition.initialNodeId];
+      ONBOARDING_FLOW.nodes[state.currentNodeId] ||
+      ONBOARDING_FLOW.nodes[ONBOARDING_FLOW.initialNodeId];
 
     // Capture context specific to stages
     if (state.currentNodeId === "ask_name" && rawInput.length > 0) {
@@ -103,7 +103,7 @@ export class ShuruBotEngine {
 
     // 4. Successful Transition
     if (matchedTargetId) {
-      const nextNode = shuruBotDefinition.nodes[matchedTargetId];
+      const nextNode = ONBOARDING_FLOW.nodes[matchedTargetId];
       if (nextNode) {
         state.currentNodeId = nextNode.id;
         state.retryCount = 0;
@@ -119,7 +119,7 @@ export class ShuruBotEngine {
     state.retryCount += 1;
     if (state.retryCount > currentNode.maxRetries) {
       // Exceeded max retries: Escalate to agent
-      const agentNode = shuruBotDefinition.nodes["agent_handoff"];
+      const agentNode = ONBOARDING_FLOW.nodes["agent_handoff"];
       state.currentNodeId = "agent_handoff";
       state.status = "handoff";
       state.retryCount = 0;

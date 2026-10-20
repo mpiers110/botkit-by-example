@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const ConversationStateSchema = new mongoose.Schema({
     waUserId: { type: String, required: true, unique: true, index: true },
-    flowId: { type: String, required: true, default: "shuruBot" },
+    flowId: { type: String, required: true, default: "onboardingBot" },
     flowVersion: { type: Number, required: true, default: 1 },
     currentNodeId: { type: String, required: true, default: "welcome" },
     context: { type: mongoose.Schema.Types.Mixed, default: {} },

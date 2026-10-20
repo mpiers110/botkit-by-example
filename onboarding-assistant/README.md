@@ -1,6 +1,6 @@
 # ShuruBot
 
-ShuruBot is a WhatsApp assistant for onboarding and helping customers learn about services and request a project quote.
+ShuruBot is an assistant for onboarding and helping customers learn about services and request a project quote.
 
 ## What it does
 
@@ -9,7 +9,7 @@ ShuruBot is a WhatsApp assistant for onboarding and helping customers learn abou
 - Summarizes the request and offers a way to start over or ask for a person.
 
 ## Flow structure:
- - **`welcome`**: Greets user and presents main
+ - **`welcome`**: Greets user and presents main menu
  - **`services`**: Explains digital services
  - **`ask_name`**: Captures customer name for lead generation
  - **`ask_timeline`**: Asks project timeline
