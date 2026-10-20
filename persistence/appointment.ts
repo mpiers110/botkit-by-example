@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { AppointmentStateModel, BookingRecordModel } from "../models/appointment.js";
-import { IAppointmentState } from "../types.js";
+import { IAppointmentState } from "../bots/appointment-booking/types.js";
 
 export const AppointmentPersistence = {
   async loadState(waUserId: string): Promise<IAppointmentState | null> {

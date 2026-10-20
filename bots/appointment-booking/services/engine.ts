@@ -1,6 +1,6 @@
 import { APPOINTMENT_FLOW } from "../flow.js";
 import { TransitionOutcome, IAppointmentState, FlowTransition } from "../types.js";
-import { AppointmentPersistence } from "./persistence.js";
+import { AppointmentPersistence } from "../../../persistence/appointment.js";
 
 // ============================================================================
 export class AppointmentBookingEngine {

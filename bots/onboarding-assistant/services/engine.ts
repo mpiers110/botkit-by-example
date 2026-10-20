@@ -1,6 +1,6 @@
 import { TransitionOutcome } from "../types.js";
 import { ONBOARDING_FLOW } from "../flow.js";
-import { Persistence } from "./persistence.js";
+import { Persistence } from "../../../persistence/onboarding.js";
 
 export class OnboardingAssistantEngine {
   /**

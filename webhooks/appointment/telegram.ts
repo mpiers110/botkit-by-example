@@ -4,7 +4,7 @@
  */
 import express, {Request, Response} from "express";
 import { Telegram } from "../../telegram.js";
-import { AppointmentBookingEngine } from "../services/engine.js";
+import { AppointmentBookingEngine } from "../../bots/appointment-booking/services/engine.js";
 
 
   const router = express.Router();

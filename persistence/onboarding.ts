@@ -1,10 +1,9 @@
-
 // ============================================================================
 // MONGOOSE PERSISTENCE
 // ============================================================================
 
 import { ConversationStateModel } from "../models/conversationStateModel.js";
-import { IConversationState } from "../types.js";
+import { IConversationState } from "../bots/onboarding-assistant/types.js";
 
 
 export const Persistence = {

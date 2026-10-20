@@ -1,4 +1,4 @@
-import {BotkitGlobal, BotkitNode} from '../types.js';
+import {BotkitGlobal, BotkitNode} from '../../types.js';
 
 
 // ============================================================================

@@ -4,7 +4,7 @@
  */
 import express, {Request, Response} from "express";
 import { sanitizeWhatsAppNumber, WhatsApp } from "../../flaresend.js";
-import { OnboardingAssistantEngine } from "../services/engine.js";
+import { OnboardingAssistantEngine } from "../../bots/onboarding-assistant/services/engine.js";
 
 
   const router = express.Router();
@@ -27,6 +27,8 @@ import { OnboardingAssistantEngine } from "../services/engine.js";
     try {
       // Acknowledge receipt to WhatsApp quickly (200 OK)
       res.status(200).json({ status: "received" });
+
+      // save the incoming webhook payload to db
       const { event, data } = WhatsApp.parseWebhook(req.body);
 
       if (event === 'message_received') {
