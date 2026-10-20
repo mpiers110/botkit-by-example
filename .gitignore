@@ -6,7 +6,5 @@ coverage/
 !.env.example
 .vercel
 pnpm-workspace.yaml
-scripts/
-dist/scripts/
 .openpost/
 .opencode/

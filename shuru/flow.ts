@@ -1,13 +1,5 @@
-import dotenv from 'dotenv';
 import {BotkitGlobal, BotkitNode} from '../types.js';
-dotenv.config();
 
-// ============================================================================
-export const CONFIG = {
-  PORT: process.env.PORT ? parseInt(process.env.PORT, 10) : 3000,
-  MONGO_URI: process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/shurubot",
-  FLARESEND_API_KEY: process.env.FLARESEND_API_KEY || ""
-};
 
 // ============================================================================
 // SHURUBOT CONVERSATIONAL FSM SPECIFICATION
@@ -149,10 +141,3 @@ export const shuruBotDefinition = {
     },
   } as Record<string, BotkitNode>,
 };
-
-// ============================================================================
-// CONVERSATION ENGINE (FSM EXECUTION)
-// ============================================================================
-
-
-

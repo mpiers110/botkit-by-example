@@ -1,5 +1,5 @@
 import { TransitionOutcome } from "../types.js";
-import { shuruBotDefinition } from "../bot.js";
+import { shuruBotDefinition } from "../flow.js";
 import { Persistence } from "./persistence.js";
 
 export class ShuruBotEngine {

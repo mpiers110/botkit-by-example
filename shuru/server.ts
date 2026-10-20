@@ -1,10 +1,9 @@
-import dotenv from 'dotenv';
-dotenv.config();
 import express, { Express, Request, Response, NextFunction } from 'express';
 import { createServer } from 'node:http';
 import mongoose from 'mongoose';
 import {ShuruBotEngine} from './services/engine.js';
 import { WhatsAppClient, sanitizeWhatsAppNumber } from '../flaresend.js';
+import { CONFIG } from '../config.js';
 
 const app: Express = express();
 const PORT = 3000;
@@ -34,7 +33,7 @@ async function connectDB(): Promise<void> {
   // A connection attempt is already in flight — reuse it instead of racing
   if (!dbConnectionPromise) {
     dbConnectionPromise = mongoose
-      .connect(process.env.MONGODB_URI as string, {
+      .connect(CONFIG.MONGO_URI as string, {
         serverSelectionTimeoutMS: 10000,
       })
       .then((conn) => {

@@ -1,5 +1,5 @@
 import { Flaresend } from "flaresend";
-import { CONFIG } from "./shuru/bot.js";
+import { CONFIG } from "./config.js";
 
 export interface FlaresendSendResponse {
   success: boolean;
@@ -64,3 +64,6 @@ export class WhatsAppClient {
       }
   }
 }
+
+// Singleton WhatsApp client instance
+export const WhatsApp = new WhatsAppClient();
