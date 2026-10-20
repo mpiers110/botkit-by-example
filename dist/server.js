@@ -1,8 +1,8 @@
 import express from 'express';
 import { createServer } from 'node:http';
 import { connectDB } from './persistence/database.js';
-import appointmentRouter from './bots/appointment-booking/router.js';
-import onboardingRouter from './bots/onboarding-assistant/router.js';
+import appointmentRouter from './routes/appointment.js';
+import onboardingRouter from './routes/onboarding.js';
 const app = express();
 const PORT = 3000;
 app.use(express.json({ limit: '10mb' }));

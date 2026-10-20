@@ -1,8 +1,8 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
 import { createServer } from 'node:http';
 import { connectDB } from './persistence/database.js';
-import appointmentRouter from './bots/appointment-booking/router.js';
-import onboardingRouter from './bots/onboarding-assistant/router.js';
+import appointmentRouter from './routes/appointment.js';
+import onboardingRouter from './routes/onboarding.js';
 
 const app: Express = express();
 const PORT = 3000;

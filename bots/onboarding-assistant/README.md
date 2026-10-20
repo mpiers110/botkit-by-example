@@ -1,6 +1,6 @@
-# ShuruBot
+# Onboarding Assistant
 
-ShuruBot is an assistant for onboarding and helping customers learn about services and request a project quote.
+This is an assistant for onboarding and helping customers learn about services and request a project quote.
 
 ## What it does
 
@@ -18,4 +18,10 @@ ShuruBot is an assistant for onboarding and helping customers learn about servic
 
 Customers can type **menu** to return to the beginning or **agent** to request a human at any point.
 
-To install, run, or deploy the example, see [SETUP.md](./SETUP.md).
+
+## Webhook endpoints
+
+ * WhatsApp(FlareSend) -> **`/onboarding-assistant/webhooks/whatsapp`**
+ * Telegram -> **`/onboarding-assistant/webhooks/telegram`**
+
+To install, run, or deploy the example, see [SETUP.md](../SETUP.md).

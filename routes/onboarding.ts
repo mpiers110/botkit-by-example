@@ -1,6 +1,6 @@
 import express from 'express';
-import telegramRouter from '../../webhooks/onboarding/telegram.js';
-import whatsAppRouter from '../../webhooks/onboarding/whatsapp.js';
+import telegramRouter from '../webhooks/telegram/onboarding.js';
+import whatsAppRouter from '../webhooks/whatsapp/onboarding.js';
 
   const router = express.Router();
 

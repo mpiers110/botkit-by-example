@@ -13,7 +13,7 @@ The main menu also includes options to check a booking, start a cancellation, or
 
 ## Webhook endpoints
 
- * WhatsApp(FlareSend) -> `/webhooks/telegram`
- * Telegram -> `/webhooks/telegram`
+ * WhatsApp(FlareSend) -> **`/appointment-booking/webhooks/whatsapp`**
+ * Telegram -> **`/appointment-booking/webhooks/telegram`**
 
 For installation and deployment, see the project [setup guide](../SETUP.md).
