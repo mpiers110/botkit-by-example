@@ -1,0 +1,41 @@
+{
+  "name": "shuru-bot-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "concurrently \"tsc --watch\" \"nodemon -q dist/server.js\"",
+    "lint": "tsc --noEmit"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Tech Tafari",
+    "url": "https://github.com/mpiers110"
+  },
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.21.0",
+      "onFail": "download"
+    }
+  },
+  "type": "module",
+  "dependencies": {
+    "@henry-dev/botkit": "^1.0.2",
+    "dotenv": "^18.0.8",
+    "express": "^5.3.0",
+    "flaresend": "^1.0.3",
+    "mongoose": "^9.11.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.5",
+    "concurrently": "^10.0.6",
+    "nodemon": "^3.1.14",
+    "typescript": "^7.0.2"
+  }
+}

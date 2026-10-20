@@ -1,0 +1,12 @@
+node_modules/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+.vercel
+pnpm-workspace.yaml
+scripts/
+dist/scripts/
+.openpost/
+.opencode/
