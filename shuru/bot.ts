@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import {BotkitGlobal, BotkitNode} from './types.js';
+import {BotkitGlobal, BotkitNode} from '../types.js';
 dotenv.config();
 
 // ============================================================================
@@ -9,23 +9,10 @@ export const CONFIG = {
   FLARESEND_API_KEY: process.env.FLARESEND_API_KEY || ""
 };
 
-
-
 // ============================================================================
 // SHURUBOT CONVERSATIONAL FSM SPECIFICATION
 // ============================================================================
 
-
-/**
- * ShuruBot: A self-contained WhatsApp onboarding & service assistant.
- * Flow structure:
- *  - welcome: Greets user and presents main menu (1: Services, 2: Start Project, 3: Human Agent)
- *  - services: Explains digital services and lets user select one or return
- *  - ask_name: Captures customer name for lead generation
- *  - ask_timeline: Asks project timeline
- *  - quote_summary: Confirms details, saves lead, and offers restart
- *  - agent_handoff: Connects to a human representative
- */
 export const shuruBotDefinition = {
   flowId: "shuruBot",
   version: 1,

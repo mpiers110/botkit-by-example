@@ -3,8 +3,8 @@
 // MONGOOSE PERSISTENCE
 // ============================================================================
 
-import { ConversationStateModel } from "../../models/conversationStateModel.js";
-import { IConversationState } from "../../types.js";
+import { ConversationStateModel } from "../models/conversationStateModel.js";
+import { IConversationState } from "../types.js";
 
 
 export const Persistence = {

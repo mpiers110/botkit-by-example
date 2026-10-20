@@ -3,8 +3,8 @@ dotenv.config();
 import express, { Express, Request, Response, NextFunction } from 'express';
 import { createServer } from 'node:http';
 import mongoose from 'mongoose';
-import {ShuruBotEngine} from './services/botkit/engine.js';
-import { parseWhatsAppWebhook, sendWhatsAppMessage} from './services/flaresend.js';
+import {ShuruBotEngine} from './services/engine.js';
+import { WhatsAppClient, sanitizeWhatsAppNumber } from '../flaresend.js';
 
 const app: Express = express();
 const PORT = 3000;
@@ -52,10 +52,7 @@ async function connectDB(): Promise<void> {
 
 }
 
-function sanitizeWhatsAppNumber(p: string): string {
-  if (!p) return '';
-  return p.replace(/[^\d]/g, '');
-}
+
 // Ensure the DB is connected before any route handler runs.
 // Routes are mounted unconditionally below; this middleware gates their execution instead.
 app.use(async (req: Request, res: Response, next: NextFunction) => {
@@ -98,7 +95,8 @@ app.use(async (req: Request, res: Response, next: NextFunction) => {
     try {
       // Acknowledge receipt to WhatsApp quickly (200 OK)
       res.status(200).json({ status: "received" });
-      const { event, data } = parseWhatsAppWebhook(req.body);
+      const WhatsApp = new WhatsAppClient();
+      const { event, data } = WhatsApp.parseWebhook(req.body);
 
       if (event === 'message_received') {
         const userMessage = data?.message?.conversation;
@@ -114,7 +112,7 @@ app.use(async (req: Request, res: Response, next: NextFunction) => {
         // Send reply to WhatsApp via Flaresend
         if (result) {
           console.log(`[Outbound WhatsApp] To: ${senderNumber} | Text: "${result.outboundText}" | Next State: ${result.nextState}`);
-          const sendResult = await sendWhatsAppMessage(senderNumber, result.outboundText);
+          const sendResult = await WhatsApp.sendMessage(senderNumber, result.outboundText);
           if (!sendResult.success) throw new Error(sendResult.error || 'Failed to send WhatsApp reply');
         }
       }
