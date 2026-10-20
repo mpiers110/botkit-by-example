@@ -1,15 +1,14 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
 import { createServer } from 'node:http';
-import { connectDB } from '../../persistence/database.js';
-import telegramRouter from '../../webhooks/onboarding/telegram.js';
-import whatsAppRouter from '../../webhooks/onboarding/whatsapp.js';
+import { connectDB } from './persistence/database.js';
+import appointmentRouter from './bots/appointment-booking/router.js';
+import onboardingRouter from './bots/onboarding-assistant/router.js';
 
 const app: Express = express();
 const PORT = 3000;
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
-
 
 // Ensure the DB is connected before any route handler runs.
 // Routes are mounted unconditionally below; this middleware gates their execution instead.
@@ -29,16 +28,13 @@ app.use(async (req: Request, res: Response, next: NextFunction) => {
   app.get("/health", (_req: Request, res: Response) => {
     res.status(200).json({
       status: "ok",
-      bot: "onboardingBot",
       uptime: process.uptime()
     });
   });
 
-  app.get("/webhooks/whatsapp", whatsAppRouter);
+  app.get("/appointment-booking", appointmentRouter);
  
-
-  app.use("/webhooks/telegram", telegramRouter);
- 
+  app.use("/onboarding-assistant", onboardingRouter);
 
 // Fallbacks
 app.use((req: Request, res: Response) => {
@@ -57,7 +53,7 @@ app.use((error: any, req: Request, res: Response, next: NextFunction) => {
 if (!process.env.VERCEL) {
   const server = createServer(app);
   server.listen(PORT, () => {
-    console.log(`🍕 Shuru API running at http://127.0.0.1:${PORT}`);
+    console.log(`🍕 BotKit API running at http://127.0.0.1:${PORT}`);
   });
 }
 

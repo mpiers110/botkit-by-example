@@ -1,8 +1,8 @@
 import express from 'express';
 import { createServer } from 'node:http';
-import { connectDB } from '../../persistence/database.js';
-import telegramRouter from '../../webhooks/appointment/telegram.js';
-import whatsAppRouter from '../../webhooks/appointment/whatsapp.js';
+import { connectDB } from './persistence/database.js';
+import appointmentRouter from './bots/appointment-booking/router.js';
+import onboardingRouter from './bots/onboarding-assistant/router.js';
 const app = express();
 const PORT = 3000;
 app.use(express.json({ limit: '10mb' }));
@@ -24,12 +24,11 @@ app.use(async (req, res, next) => {
 app.get("/health", (_req, res) => {
     res.status(200).json({
         status: "ok",
-        bot: "appointmentBooking",
         uptime: process.uptime()
     });
 });
-app.get("/webhooks/whatsapp", whatsAppRouter);
-app.use("/webhooks/telegram", telegramRouter);
+app.get("/appointment-booking", appointmentRouter);
+app.use("/onboarding-assistant", onboardingRouter);
 // Fallbacks
 app.use((req, res) => {
     res.status(404).json({
